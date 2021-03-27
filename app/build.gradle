@@ -69,7 +69,7 @@ dependencies {
     // for Retrofit
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.5.0"
 
     // for RxJava and RxAndroid
     implementation "io.reactivex.rxjava2:rxjava:2.2.7"
@@ -80,11 +80,20 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
-    // for unit testing
+    // for LiveData (testing)
+    testImplementation 'android.arch.core:core-testing:1.1.1'
+
+    // for jUnit (testing)
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.6.0"
     testImplementation "org.junit.jupiter:junit-jupiter-params:5.6.0"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.6.0"
+
+    // for Mockito (testing)
     testImplementation "org.mockito.kotlin:mockito-kotlin:2.2.11"
+
+    // for Hilt (testing)
+    testImplementation 'com.google.dagger:hilt-android-testing:2.33-beta'
+    testAnnotationProcessor 'com.google.dagger:hilt-compiler:2.33-beta'
 
     // for android testing
     androidTestImplementation "androidx.test.ext:junit:1.1.2"

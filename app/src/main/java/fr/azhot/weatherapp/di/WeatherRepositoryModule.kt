@@ -6,11 +6,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import fr.azhot.weatherapp.repository.WeatherRepository
 import fr.azhot.weatherapp.repository.WeatherRepositoryImpl
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class WeatherRepositoryModule {
 
+    @Singleton
     @Binds
     abstract fun bindsWeatherRepository(weatherRepositoryImpl: WeatherRepositoryImpl): WeatherRepository
 }
