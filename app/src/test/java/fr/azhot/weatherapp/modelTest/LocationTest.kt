@@ -1,6 +1,6 @@
 package fr.azhot.weatherapp.modelTest
 
-import fr.azhot.weatherapp.model.Location
+import fr.azhot.weatherapp.model.currentweatherPOJO.Location
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.BeforeEach

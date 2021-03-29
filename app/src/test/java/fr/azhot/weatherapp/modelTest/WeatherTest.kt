@@ -1,6 +1,6 @@
 package fr.azhot.weatherapp.modelTest
 
-import fr.azhot.weatherapp.model.Weather
+import fr.azhot.weatherapp.model.currentweatherPOJO.Weather
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach

@@ -1,4 +1,4 @@
-package fr.azhot.weatherapp.model
+package fr.azhot.weatherapp.model.currentweatherPOJO
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

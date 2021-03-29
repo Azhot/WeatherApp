@@ -1,6 +1,6 @@
 package fr.azhot.weatherapp.modelTest
 
-import fr.azhot.weatherapp.model.CurrentWeather
+import fr.azhot.weatherapp.model.currentweatherPOJO.CurrentWeather
 import org.junit.jupiter.api.BeforeEach
 
 class CurrentWeatherTest {
