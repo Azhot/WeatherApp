@@ -1,9 +1,10 @@
 package fr.azhot.weatherapp.repository
 
-import fr.azhot.weatherapp.model.currentweatherPOJO.CurrentWeather
+import fr.azhot.weatherapp.model.Units
+import fr.azhot.weatherapp.model.WeatherData
 import kotlinx.coroutines.flow.Flow
 
 interface WeatherRepository {
-    suspend fun fetchCurrentWeather(cityName: String): Flow<CurrentWeather>
+    suspend fun fetchWeatherData(lat: Double, lon: Double, units: Units): Flow<WeatherData>
 }
 

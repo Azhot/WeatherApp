@@ -4,8 +4,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import fr.azhot.weatherapp.repository.AutocompleteRepository
-import fr.azhot.weatherapp.repository.AutocompleteRepositoryImpl
 import fr.azhot.weatherapp.repository.WeatherRepository
 import fr.azhot.weatherapp.repository.WeatherRepositoryImpl
 import javax.inject.Singleton
@@ -17,8 +15,4 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindWeatherRepository(weatherRepositoryImpl: WeatherRepositoryImpl): WeatherRepository
-
-    @Singleton
-    @Binds
-    abstract fun bindAutocompleteRepository(autocompleteRepositoryImpl: AutocompleteRepositoryImpl): AutocompleteRepository
 }

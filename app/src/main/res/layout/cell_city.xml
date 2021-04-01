@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@drawable/ic_background_cell_city"
+    android:elevation="2dp"
+    android:ellipsize="end"
+    android:maxLines="1"
+    android:paddingStart="8dp"
+    android:paddingTop="4dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="4dp"
+    android:textColor="@color/gray_115"
+    android:textSize="20sp"
+    tools:text="Paris" />
+

@@ -1,12 +1,15 @@
 package fr.azhot.weatherapp.viewmodel
 
+import android.app.Application
+import android.location.Address
+import android.location.Geocoder
+import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import fr.azhot.weatherapp.model.autocompletePOJO.Autocomplete
-import fr.azhot.weatherapp.model.currentweatherPOJO.CurrentWeather
-import fr.azhot.weatherapp.repository.AutocompleteRepository
+import fr.azhot.weatherapp.model.City
+import fr.azhot.weatherapp.model.Units
 import fr.azhot.weatherapp.repository.WeatherRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -16,32 +19,44 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val weatherRepository: WeatherRepository,
-    private val autocompleteRepository: AutocompleteRepository,
-) : ViewModel() {
+        private val weatherRepository: WeatherRepository,
+        application: Application,
+) : AndroidViewModel(application) {
 
     @Inject
-    lateinit var currentWeather: MutableLiveData<CurrentWeather>
+    lateinit var cityLiveData: MutableLiveData<City>
 
     @Inject
-    lateinit var autocomplete: MutableLiveData<Autocomplete>
+    lateinit var addressesLiveData: MutableLiveData<List<Address>>
 
-    fun fetchCurrentWeather(cityName: String) {
+    fun fetchWeatherData(address: Address, units: Units) {
         viewModelScope.launch(Dispatchers.IO) {
-            weatherRepository.fetchCurrentWeather(cityName).collect { response ->
+            weatherRepository.fetchWeatherData(
+                    address.latitude,
+                    address.longitude,
+                    units).collect { response ->
                 withContext(Dispatchers.Main) {
-                    currentWeather.value = response
+                    cityLiveData.value = City(address.locality, address.countryName, response)
                 }
             }
         }
     }
 
-    fun fetchAutocomplete(cityName: String) {
+    fun fetchAddresses(cityName: String) {
+        val geocoder = Geocoder(getApplication())
         viewModelScope.launch(Dispatchers.IO) {
-            autocompleteRepository.fetchAutocomplete(cityName).collect { response ->
+            runCatching {
+                val addresses = geocoder.getFromLocationName(cityName, 5)
                 withContext(Dispatchers.Main) {
-                    autocomplete.value = response
+                    addressesLiveData.value = addresses
                 }
+            }.run {
+                if (this.isFailure)
+                    Log.e(
+                            MainViewModel::class.simpleName,
+                            "fetchAddresses: ",
+                            this.exceptionOrNull()
+                    )
             }
         }
     }

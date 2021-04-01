@@ -1,22 +1,22 @@
 package fr.azhot.weatherapp.di
 
+import android.location.Address
 import androidx.lifecycle.MutableLiveData
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import fr.azhot.weatherapp.model.autocompletePOJO.Autocomplete
-import fr.azhot.weatherapp.model.currentweatherPOJO.CurrentWeather
+import fr.azhot.weatherapp.model.City
 
 @Module
 @InstallIn(SingletonComponent::class)
 object MutableLiveDataModule {
 
     @Provides
-    fun provideCurrentWeatherMutableLiveData(): MutableLiveData<CurrentWeather> =
-        MutableLiveData<CurrentWeather>()
+    fun provideWeatherDataMutableLiveData(): MutableLiveData<City> =
+            MutableLiveData<City>()
 
     @Provides
-    fun provideAutocompleteMutableLiveData(): MutableLiveData<Autocomplete> =
-        MutableLiveData<Autocomplete>()
+    fun provideListAddressMutableLiveData(): MutableLiveData<List<Address>> =
+            MutableLiveData<List<Address>>()
 }
