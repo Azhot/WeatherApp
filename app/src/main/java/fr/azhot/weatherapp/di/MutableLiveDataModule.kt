@@ -5,18 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import fr.azhot.weatherapp.model.City
+import dagger.hilt.android.components.ActivityRetainedComponent
+import dagger.hilt.android.scopes.ActivityRetainedScoped
+import fr.azhot.weatherapp.domain.model.City
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ActivityRetainedComponent::class)
 object MutableLiveDataModule {
 
+    @ActivityRetainedScoped
     @Provides
-    fun provideWeatherDataMutableLiveData(): MutableLiveData<City> =
-            MutableLiveData<City>()
+    fun provideWeatherDataMutableLiveData(): MutableLiveData<City> = MutableLiveData<City>()
 
+    @ActivityRetainedScoped
     @Provides
     fun provideListAddressMutableLiveData(): MutableLiveData<List<Address>> =
-            MutableLiveData<List<Address>>()
+        MutableLiveData<List<Address>>()
 }

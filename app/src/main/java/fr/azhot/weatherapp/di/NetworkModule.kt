@@ -4,21 +4,26 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import fr.azhot.weatherapp.api.OpenWeatherApi
+import fr.azhot.weatherapp.network.OpenWeatherService
+import fr.azhot.weatherapp.network.model.WeatherDtoMapper
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ServiceModule {
+object NetworkModule {
 
-    private const val OPEN_WEATHER_BASE_URL = "https://api.openweathermap.org/"
+    @Singleton
+    @Provides
+    fun provideWeatherDtoMapper() = WeatherDtoMapper()
 
+    @Singleton
     @Provides
     fun provideOpenWeatherService() =
         Retrofit.Builder()
-            .baseUrl(OPEN_WEATHER_BASE_URL)
+            .baseUrl("https://api.openweathermap.org/data/2.5/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(OpenWeatherApi::class.java)
+            .create(OpenWeatherService::class.java)
 }

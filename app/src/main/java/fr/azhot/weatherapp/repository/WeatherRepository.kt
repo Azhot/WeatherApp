@@ -1,10 +1,13 @@
 package fr.azhot.weatherapp.repository
 
-import fr.azhot.weatherapp.model.Units
-import fr.azhot.weatherapp.model.WeatherData
-import kotlinx.coroutines.flow.Flow
+import android.location.Address
+import fr.azhot.weatherapp.domain.model.City
+import fr.azhot.weatherapp.domain.type.UnitsType
 
 interface WeatherRepository {
-    suspend fun fetchWeatherData(lat: Double, lon: Double, units: Units): Flow<WeatherData>
+    suspend fun fetchWeatherData(
+        address: Address,
+        units: UnitsType,
+    ): City
 }
 

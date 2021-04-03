@@ -1,4 +1,4 @@
-package fr.azhot.weatherapp.view.adapter
+package fr.azhot.weatherapp.presentation.ui.city_list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

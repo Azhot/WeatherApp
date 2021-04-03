@@ -4,28 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activity.MainActivity">
+    tools:context=".presentation.MainActivity">
 
-    <com.google.android.material.textfield.MaterialAutoCompleteTextView
-        android:id="@+id/citySearchAutoComplete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:drawableStart="@drawable/ic_baseline_search_24"
-        android:drawablePadding="16dp"
-        android:ellipsize="end"
-        android:hint="@string/city_search"
-        android:lines="1"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/cityWeatherTextView"
-        android:layout_width="match_parent"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/main_container_view"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
+        app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/citySearchAutoComplete" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/main_nav" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

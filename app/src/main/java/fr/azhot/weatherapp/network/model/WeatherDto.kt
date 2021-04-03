@@ -1,6 +1,6 @@
-package fr.azhot.weatherapp.model
+package fr.azhot.weatherapp.network.model
 
-data class WeatherData(
+data class WeatherDto(
     val alerts: List<Any>,
     val current: Current,
     val daily: List<Daily>,

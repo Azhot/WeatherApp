@@ -1,18 +1,23 @@
 package fr.azhot.weatherapp.di
 
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import fr.azhot.weatherapp.network.OpenWeatherService
+import fr.azhot.weatherapp.network.model.WeatherDtoMapper
 import fr.azhot.weatherapp.repository.WeatherRepository
 import fr.azhot.weatherapp.repository.WeatherRepositoryImpl
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class RepositoryModule {
+object RepositoryModule {
 
     @Singleton
-    @Binds
-    abstract fun bindWeatherRepository(weatherRepositoryImpl: WeatherRepositoryImpl): WeatherRepository
+    @Provides
+    fun provideWeatherRepository(
+        openWeatherService: OpenWeatherService,
+        weatherDtoMapper: WeatherDtoMapper,
+    ): WeatherRepository = WeatherRepositoryImpl(openWeatherService, weatherDtoMapper)
 }
