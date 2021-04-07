@@ -3,36 +3,25 @@ package fr.azhot.weatherapp.presentation.ui.city_list
 import android.content.Context
 import android.location.Address
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import dagger.hilt.android.AndroidEntryPoint
 import fr.azhot.weatherapp.databinding.FragmentCityListBinding
 import fr.azhot.weatherapp.domain.model.City
 import fr.azhot.weatherapp.domain.type.UnitsType
+import fr.azhot.weatherapp.presentation.BaseFragment
 import java.util.*
 
 @AndroidEntryPoint
-class CityListFragment : Fragment() {
+class CityListFragment :
+    BaseFragment<FragmentCityListBinding>({ (FragmentCityListBinding.inflate(it)) }) {
 
-    private lateinit var binding: FragmentCityListBinding
     private val viewModel: CityListViewModel by viewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentCityListBinding.inflate(inflater)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
