@@ -65,13 +65,13 @@ class CityListFragment : Fragment() {
         liveData.observe(viewLifecycleOwner) {
             binding.cityWeatherTextView.text = StringBuilder().run {
                 appendLine("City: ${it.city}") // to be removed
-                appendLine("Temperature: ${it.weatherDto.current.temp.toInt()}°C") // to be removed
-                appendLine("Weather condition: ${it.weatherDto.current.weather[0].main}") // to be removed
-                appendLine("Weather description: ${it.weatherDto.current.weather[0].description}") // to be removed
-                appendLine("Cloudiness: ${it.weatherDto.current.clouds}%") // to be removed
+                appendLine("Temperature: ${it.weatherData.current.temp.toInt()}°C") // to be removed
+                appendLine("Weather condition: ${it.weatherData.current.weather[0].main}") // to be removed
+                appendLine("Weather description: ${it.weatherData.current.weather[0].description}") // to be removed
+                appendLine("Cloudiness: ${it.weatherData.current.clouds}%") // to be removed
                 // todo: write a wind compass
-                appendLine("Wind direction: ${it.weatherDto.current.wind_deg}°") // to be removed
-                appendLine("Wind speed: ${it.weatherDto.current.wind_speed} km/h") // to be removed
+                appendLine("Wind direction: ${it.weatherData.current.windDeg}°") // to be removed
+                appendLine("Wind speed: ${it.weatherData.current.windSpeed} km/h") // to be removed
                 toString()
             }
         }

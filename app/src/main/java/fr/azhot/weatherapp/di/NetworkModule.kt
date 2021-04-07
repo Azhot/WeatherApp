@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import fr.azhot.weatherapp.network.OpenWeatherService
-import fr.azhot.weatherapp.network.model.WeatherDtoMapper
+import fr.azhot.weatherapp.network.model.WeatherDataDtoMapper
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -16,7 +16,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideWeatherDtoMapper() = WeatherDtoMapper()
+    fun provideWeatherDtoMapper() = WeatherDataDtoMapper
 
     @Singleton
     @Provides

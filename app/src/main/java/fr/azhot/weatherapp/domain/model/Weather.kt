@@ -1,6 +1,6 @@
-package fr.azhot.weatherapp.network.model
+package fr.azhot.weatherapp.domain.model
 
-data class WeatherDto(
+data class Weather(
     val description: String,
     val icon: String,
     val id: Int,

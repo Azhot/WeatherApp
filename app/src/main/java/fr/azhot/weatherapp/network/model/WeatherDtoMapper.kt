@@ -1,19 +1,32 @@
 package fr.azhot.weatherapp.network.model
 
-import android.location.Address
-import fr.azhot.weatherapp.domain.model.City
+import fr.azhot.weatherapp.domain.model.Weather
+import fr.azhot.weatherapp.domain.util.DomainMapper
 
-class WeatherDtoMapper {
-
-    fun mapToDomain(address: Address, model: WeatherDto): City {
-        return City(
-            city = address.locality,
-            country = address.countryName,
-            weatherDto = model
+object WeatherDtoMapper : DomainMapper<WeatherDto, Weather> {
+    override fun mapToDomain(model: WeatherDto): Weather {
+        return Weather(
+            description = model.description,
+            icon = model.icon,
+            id = model.id,
+            main = model.main
         )
     }
 
-    fun mapFromDomain(domainModel: City): WeatherDto {
-        return domainModel.weatherDto
+    override fun mapFromDomain(domainModel: Weather): WeatherDto {
+        return WeatherDto(
+            description = domainModel.description,
+            icon = domainModel.icon,
+            id = domainModel.id,
+            main = domainModel.main
+        )
+    }
+
+    fun mapToDomainList(models: List<WeatherDto>): List<Weather> {
+        return models.map { mapToDomain(it) }
+    }
+
+    fun mapFromDomainList(domainModels: List<Weather>): List<WeatherDto> {
+        return domainModels.map { mapFromDomain(it) }
     }
 }

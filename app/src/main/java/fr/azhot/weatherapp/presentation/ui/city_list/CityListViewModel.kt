@@ -39,7 +39,11 @@ class CityListViewModel @Inject constructor(
     fun fetchWeatherData(address: Address, units: UnitsType) {
         viewModelScope.launch {
             _cityLiveData.value = withContext(Dispatchers.IO) {
-                weatherRepository.fetchWeatherData(address, units)
+                City(
+                    address.locality,
+                    address.countryName,
+                    weatherRepository.fetchWeatherData(address, units),
+                )
             }
         }
     }

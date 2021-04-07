@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import fr.azhot.weatherapp.network.OpenWeatherService
-import fr.azhot.weatherapp.network.model.WeatherDtoMapper
+import fr.azhot.weatherapp.network.model.WeatherDataDtoMapper
 import fr.azhot.weatherapp.repository.WeatherRepository
 import fr.azhot.weatherapp.repository.WeatherRepositoryImpl
 import javax.inject.Singleton
@@ -18,6 +18,6 @@ object RepositoryModule {
     @Provides
     fun provideWeatherRepository(
         openWeatherService: OpenWeatherService,
-        weatherDtoMapper: WeatherDtoMapper,
-    ): WeatherRepository = WeatherRepositoryImpl(openWeatherService, weatherDtoMapper)
+        weatherDataDtoMapper: WeatherDataDtoMapper,
+    ): WeatherRepository = WeatherRepositoryImpl(openWeatherService, weatherDataDtoMapper)
 }
