@@ -6,7 +6,7 @@ import fr.azhot.weatherapp.domain.util.DomainMapper
 object WeatherDataDtoMapper : DomainMapper<WeatherDataDto, WeatherData> {
     override fun mapToDomain(model: WeatherDataDto): WeatherData {
         return WeatherData(
-            alerts = model.alerts,
+            alerts = AlertDtoMapper.mapToDomainList(model.alerts),
             current = CurrentDtoMapper.mapToDomain(model.current),
             daily = DailyDtoMapper.mapToDomainList(model.daily),
             hourly = HourlyDtoMapper.mapToDomainList(model.hourly),
@@ -20,7 +20,7 @@ object WeatherDataDtoMapper : DomainMapper<WeatherDataDto, WeatherData> {
 
     override fun mapFromDomain(domainModel: WeatherData): WeatherDataDto {
         return WeatherDataDto(
-            alerts = domainModel.alerts,
+            alerts = AlertDtoMapper.mapFromDomainList(domainModel.alerts),
             current = CurrentDtoMapper.mapFromDomain(domainModel.current),
             daily = DailyDtoMapper.mapFromDomainList(domainModel.daily),
             hourly = HourlyDtoMapper.mapFromDomainList(domainModel.hourly),
