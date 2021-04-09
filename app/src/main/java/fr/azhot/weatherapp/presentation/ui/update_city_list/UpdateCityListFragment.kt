@@ -9,6 +9,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import fr.azhot.weatherapp.databinding.FragmentUpdateCityListBinding
 import fr.azhot.weatherapp.domain.model.City
 import fr.azhot.weatherapp.presentation.BaseFragment
@@ -16,6 +17,7 @@ import fr.azhot.weatherapp.presentation.MainViewModel
 import java.util.*
 import java.util.Collections.*
 
+@AndroidEntryPoint
 class UpdateCityListFragment :
     BaseFragment<FragmentUpdateCityListBinding>({ FragmentUpdateCityListBinding.inflate(it) }),
     UpdateCityListAdapter.Interaction {
