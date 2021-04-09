@@ -1,7 +1,7 @@
 package fr.azhot.weatherapp.domain.model
 
-data class WeatherData(
-    val alerts: List<Alert>,
+data class Forecast(
+    val alerts: List<Alert>? = null,
     val current: Current,
     val daily: List<Daily>,
     val hourly: List<Hourly>,

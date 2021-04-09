@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">WeatherApp</string>
 
-    <string name="address_name">%s, %s</string>
+    <string name="city_name">%s, %s</string>
     <string name="search">Search</string>
     <string name="city_search">City search…</string>
 </resources>

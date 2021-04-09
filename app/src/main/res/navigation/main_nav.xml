@@ -9,5 +9,14 @@
         android:id="@+id/cityListFragment"
         android:name="fr.azhot.weatherapp.presentation.ui.city_list.CityListFragment"
         android:label="fragment_city_list"
-        tools:layout="@layout/fragment_city_list" />
+        tools:layout="@layout/fragment_city_list" >
+        <action
+            android:id="@+id/action_cityListFragment_to_updateCityListFragment"
+            app:destination="@id/updateCityListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateCityListFragment"
+        android:name="fr.azhot.weatherapp.presentation.ui.update_city_list.UpdateCityListFragment"
+        android:label="fragment_update_city_list"
+        tools:layout="@layout/fragment_update_city_list" />
 </navigation>

@@ -24,11 +24,11 @@ object AlertDtoMapper : DomainMapper<AlertDto, Alert> {
         )
     }
 
-    fun mapToDomainList(models: List<AlertDto>): List<Alert> {
-        return models.map { mapToDomain(it) }
+    fun mapToDomainList(models: List<AlertDto>?): List<Alert>? {
+        return models?.map { mapToDomain(it) }
     }
 
-    fun mapFromDomainList(domainModels: List<Alert>): List<AlertDto> {
-        return domainModels.map { mapFromDomain(it) }
+    fun mapFromDomainList(domainModels: List<Alert>?): List<AlertDto>? {
+        return domainModels?.map { mapFromDomain(it) }
     }
 }

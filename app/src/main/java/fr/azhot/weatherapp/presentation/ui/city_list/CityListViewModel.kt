@@ -1,20 +1,19 @@
 package fr.azhot.weatherapp.presentation.ui.city_list
 
 import android.app.Application
-import android.location.Address
-import android.location.Geocoder
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.Transformations
 import dagger.hilt.android.lifecycle.HiltViewModel
-import fr.azhot.weatherapp.domain.model.City
-import fr.azhot.weatherapp.domain.type.UnitsType
+import fr.azhot.weatherapp.domain.model.Forecast
+import fr.azhot.weatherapp.presentation.ui.city_list.state.CityListStateEvent
+import fr.azhot.weatherapp.presentation.ui.city_list.state.CityListStateEvent.GetForecastEvent
+import fr.azhot.weatherapp.presentation.ui.city_list.state.CityListStateEvent.None
+import fr.azhot.weatherapp.presentation.ui.city_list.state.CityListViewState
 import fr.azhot.weatherapp.repository.WeatherRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import fr.azhot.weatherapp.util.AbsentLiveData
+import fr.azhot.weatherapp.util.DataState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,45 +22,41 @@ class CityListViewModel @Inject constructor(
     application: Application,
 ) : AndroidViewModel(application) {
 
-    @Inject
-    lateinit var geocoder: Geocoder
+    private val _stateEvent: MutableLiveData<CityListStateEvent> = MutableLiveData()
+    private val _viewState: MutableLiveData<CityListViewState> = MutableLiveData()
 
-    @Inject
-    lateinit var _addressesLiveData: MutableLiveData<List<Address>>
+    val viewState: LiveData<CityListViewState>
+        get() = _viewState
 
-    @Inject
-    lateinit var _cityLiveData: MutableLiveData<City>
+    val dataState: LiveData<DataState<CityListViewState>> = Transformations
+        .switchMap(_stateEvent) { stateEvent ->
+            stateEvent?.let {
+                handleStateEvent(stateEvent)
+            }
+        }
 
-    val addressesLiveData: LiveData<List<Address>> get() = _addressesLiveData
-    val cityLiveData: LiveData<City> get() = _cityLiveData
-
-
-    fun fetchWeatherData(address: Address, units: UnitsType) {
-        viewModelScope.launch {
-            _cityLiveData.value = withContext(Dispatchers.IO) {
-                City(
-                    address.locality,
-                    address.countryName,
-                    weatherRepository.fetchWeatherData(address, units),
-                )
+    private fun handleStateEvent(stateEvent: CityListStateEvent): LiveData<DataState<CityListViewState>> {
+        return when (stateEvent) {
+            is GetForecastEvent -> {
+                weatherRepository.fetchForecast(stateEvent.lat, stateEvent.lon, stateEvent.units)
+            }
+            is None -> {
+                AbsentLiveData.create()
             }
         }
     }
 
-    fun fetchAddresses(cityName: String) {
-        viewModelScope.launch {
-            runCatching {
-                _addressesLiveData.value = withContext(Dispatchers.IO) {
-                    geocoder.getFromLocationName(cityName, 5)
-                }
-            }.run {
-                if (this.isFailure)
-                    Log.e(
-                        CityListViewModel::class.simpleName,
-                        "fetchAddresses: ",
-                        this.exceptionOrNull()
-                    )
-            }
-        }
+    fun setForecastData(forecast: Forecast) {
+        val update = getCurrentViewStateOrNew()
+        update.forecast = forecast
+        _viewState.value = update
+    }
+
+    fun getCurrentViewStateOrNew(): CityListViewState {
+        return viewState.value ?: CityListViewState()
+    }
+
+    fun setStateEvent(event: CityListStateEvent) {
+        _stateEvent.value = event
     }
 }

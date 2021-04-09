@@ -1,11 +1,11 @@
 package fr.azhot.weatherapp.network.model
 
-import fr.azhot.weatherapp.domain.model.WeatherData
+import fr.azhot.weatherapp.domain.model.Forecast
 import fr.azhot.weatherapp.domain.util.DomainMapper
 
-object WeatherDataDtoMapper : DomainMapper<WeatherDataDto, WeatherData> {
-    override fun mapToDomain(model: WeatherDataDto): WeatherData {
-        return WeatherData(
+object ForecastDtoMapper : DomainMapper<ForecastDto, Forecast> {
+    override fun mapToDomain(model: ForecastDto): Forecast {
+        return Forecast(
             alerts = AlertDtoMapper.mapToDomainList(model.alerts),
             current = CurrentDtoMapper.mapToDomain(model.current),
             daily = DailyDtoMapper.mapToDomainList(model.daily),
@@ -18,8 +18,8 @@ object WeatherDataDtoMapper : DomainMapper<WeatherDataDto, WeatherData> {
         )
     }
 
-    override fun mapFromDomain(domainModel: WeatherData): WeatherDataDto {
-        return WeatherDataDto(
+    override fun mapFromDomain(domainModel: Forecast): ForecastDto {
+        return ForecastDto(
             alerts = AlertDtoMapper.mapFromDomainList(domainModel.alerts),
             current = CurrentDtoMapper.mapFromDomain(domainModel.current),
             daily = DailyDtoMapper.mapFromDomainList(domainModel.daily),

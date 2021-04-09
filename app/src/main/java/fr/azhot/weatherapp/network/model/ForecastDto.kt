@@ -3,10 +3,10 @@ package fr.azhot.weatherapp.network.model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class WeatherDataDto(
+data class ForecastDto(
     @Expose
     @SerializedName("alerts")
-    val alerts: List<AlertDto>,
+    val alerts: List<AlertDto>? = null,
     @Expose
     @SerializedName("current")
     val current: CurrentDto,

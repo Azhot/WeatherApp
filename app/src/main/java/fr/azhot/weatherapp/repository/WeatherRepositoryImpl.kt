@@ -1,26 +1,35 @@
 package fr.azhot.weatherapp.repository
 
-import android.location.Address
-import fr.azhot.weatherapp.domain.model.WeatherData
+import androidx.lifecycle.LiveData
 import fr.azhot.weatherapp.domain.type.UnitsType
 import fr.azhot.weatherapp.network.OpenWeatherService
-import fr.azhot.weatherapp.network.model.WeatherDataDtoMapper
+import fr.azhot.weatherapp.network.model.ForecastDto
+import fr.azhot.weatherapp.network.model.ForecastDtoMapper
+import fr.azhot.weatherapp.network.util.ApiResponse
+import fr.azhot.weatherapp.network.util.ApiSuccessResponse
+import fr.azhot.weatherapp.presentation.ui.city_list.state.CityListViewState
+import fr.azhot.weatherapp.util.DataState
 
 class WeatherRepositoryImpl(
     private val openWeatherService: OpenWeatherService,
-    private val weatherDataDtoMapper: WeatherDataDtoMapper,
+    private val weatherDataDtoMapper: ForecastDtoMapper,
 ) : WeatherRepository {
 
-    override suspend fun fetchWeatherData(
-        address: Address,
+    override fun fetchForecast(
+        lat: Double,
+        lon: Double,
         units: UnitsType,
-    ): WeatherData {
-        return weatherDataDtoMapper.mapToDomain(
-            openWeatherService.fetchWeatherData(
-                address.latitude,
-                address.longitude,
-                units
-            )
-        )
+    ): LiveData<DataState<CityListViewState>> {
+        return object : NetworkBoundResource<ForecastDto, CityListViewState>() {
+            override fun createCall(): LiveData<ApiResponse<ForecastDto>> {
+                return openWeatherService.fetchForecast(lat, lon, units)
+            }
+
+            override fun handleApiSuccessResponse(response: ApiSuccessResponse<ForecastDto>) {
+                result.value = DataState.data(
+                    data = CityListViewState(weatherDataDtoMapper.mapToDomain(response.body))
+                )
+            }
+        }.asLiveData()
     }
 }

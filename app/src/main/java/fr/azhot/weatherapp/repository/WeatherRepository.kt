@@ -1,14 +1,15 @@
 package fr.azhot.weatherapp.repository
 
-import android.location.Address
-import fr.azhot.weatherapp.domain.model.City
-import fr.azhot.weatherapp.domain.model.WeatherData
+import androidx.lifecycle.LiveData
 import fr.azhot.weatherapp.domain.type.UnitsType
+import fr.azhot.weatherapp.presentation.ui.city_list.state.CityListViewState
+import fr.azhot.weatherapp.util.DataState
 
 interface WeatherRepository {
-    suspend fun fetchWeatherData(
-        address: Address,
+    fun fetchForecast(
+        lat: Double,
+        lon: Double,
         units: UnitsType,
-    ): WeatherData
+    ): LiveData<DataState<CityListViewState>>
 }
 
