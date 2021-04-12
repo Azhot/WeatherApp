@@ -4,11 +4,15 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import fr.azhot.weatherapp.databinding.FragmentCityListBinding
+import fr.azhot.weatherapp.domain.model.City
 import fr.azhot.weatherapp.domain.type.UnitsType
 import fr.azhot.weatherapp.presentation.BaseFragment
+import fr.azhot.weatherapp.presentation.MainViewModel
 import fr.azhot.weatherapp.presentation.ui.DataStateListener
 import fr.azhot.weatherapp.presentation.ui.city_list.state.CityListStateEvent
 
@@ -17,7 +21,9 @@ class CityListFragment :
     BaseFragment<FragmentCityListBinding>({ (FragmentCityListBinding.inflate(it)) }) {
 
     private val viewModel: CityListViewModel by viewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var dataStateListener: DataStateListener
+    private lateinit var cityListAdapter: CityListAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -33,10 +39,23 @@ class CityListFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initRecyclerView()
         subscribeObservers()
     }
 
+    private fun initRecyclerView() {
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(activity)
+            cityListAdapter = CityListAdapter()
+            adapter = cityListAdapter
+        }
+    }
+
     private fun subscribeObservers() {
+        mainViewModel.cities.observe(viewLifecycleOwner) {
+            cityListAdapter.submitList(ArrayList<City>(it))
+        }
+
         viewModel.dataState.observe(viewLifecycleOwner) { dataState ->
 
             // handle loading and message
